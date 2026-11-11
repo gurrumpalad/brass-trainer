@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- три поршня-клапана, как на трубе (средний длиннее) -->
+    <path
+        android:strokeColor="#E8B44A"
+        android:strokeWidth="11"
+        android:strokeLineCap="round"
+        android:pathData="M40,46 L40,70" />
+    <path
+        android:strokeColor="#E8B44A"
+        android:strokeWidth="11"
+        android:strokeLineCap="round"
+        android:pathData="M54,40 L54,70" />
+    <path
+        android:strokeColor="#E8B44A"
+        android:strokeWidth="11"
+        android:strokeLineCap="round"
+        android:pathData="M68,46 L68,70" />
+
+    <!-- кнопки клапанов -->
+    <path android:fillColor="#F5D48A" android:pathData="M33,43 h14 v4.5 h-14 z" />
+    <path android:fillColor="#F5D48A" android:pathData="M47,37 h14 v4.5 h-14 z" />
+    <path android:fillColor="#F5D48A" android:pathData="M61,43 h14 v4.5 h-14 z" />
+</vector>
