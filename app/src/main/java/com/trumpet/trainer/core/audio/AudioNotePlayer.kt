@@ -3,6 +3,7 @@ package com.trumpet.trainer.core.audio
 import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioTrack
+import com.trumpet.trainer.GameSettings
 import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,11 +19,13 @@ import kotlinx.coroutines.launch
  * повторного запуска. Для прототипа этого достаточно; в продакшене
  * стратегия заменяется на сэмплы/SoundFont без изменения интерфейса.
  */
-class AudioNotePlayer {
+class AudioNotePlayer(private val settings: GameSettings) {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    private val noteTracks = ConcurrentHashMap<Int, AudioTrack>()
+    data class NoteKey(val midi: Int, val semitones: Int)
+
+    private val noteTracks = ConcurrentHashMap<NoteKey, AudioTrack>()
     private var clickAccent: AudioTrack? = null
     private var clickNormal: AudioTrack? = null
     private var buzzTrack: AudioTrack? = null
@@ -32,7 +35,8 @@ class AudioNotePlayer {
 
     fun playNote(midi: Int, volume: Float = 0.9f) {
         if (!enabled) return
-        scope.launch { noteTrack(midi).playOnce(volume) }
+        val semitones = settings.instrumentPitch.semitones
+        scope.launch { noteTrack(midi, semitones).playOnce(volume) }
     }
 
     fun playClick(accent: Boolean) {
@@ -58,8 +62,8 @@ class AudioNotePlayer {
         buzzTrack = null
     }
 
-    private fun noteTrack(midi: Int): AudioTrack =
-        noteTracks.getOrPut(midi) { build(BrassSynth.notePcm(midi)) }
+    private fun noteTrack(midi: Int, semitones: Int): AudioTrack =
+        noteTracks.getOrPut(NoteKey(midi, semitones)) { build(BrassSynth.notePcm(midi, semitones = semitones)) }
 
     private fun clickAccentTrack(): AudioTrack =
         clickAccent ?: build(BrassSynth.clickPcm(accent = true)).also { clickAccent = it }

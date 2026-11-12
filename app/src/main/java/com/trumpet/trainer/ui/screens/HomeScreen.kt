@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.trumpet.trainer.AppContainer
 import com.trumpet.trainer.core.model.AppLanguage
+import com.trumpet.trainer.core.model.InstrumentPitch
 import com.trumpet.trainer.core.model.Level
 import com.trumpet.trainer.ui.localization.getStrings
 import com.trumpet.trainer.ui.theme.Brass
@@ -60,6 +61,7 @@ fun HomeScreen(
 ) {
     val settings = container.settings
     var language by remember { mutableStateOf(settings.language) }
+    var instrumentPitch by remember { mutableStateOf(settings.instrumentPitch) }
     var level by remember { mutableStateOf(settings.level) }
     var bpm by remember { mutableStateOf(settings.bpm.toFloat()) }
     var showNames by remember { mutableStateOf(settings.showNoteNames) }
@@ -117,6 +119,20 @@ fun HomeScreen(
                         settings.language = lang
                     },
                     text = lang.displayName,
+                )
+            }
+        }
+
+        Text(strings.settingInstrumentPitch, style = MaterialTheme.typography.bodyMedium)
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            InstrumentPitch.entries.forEach { pitch ->
+                Chip(
+                    selected = pitch == instrumentPitch,
+                    onClick = {
+                        instrumentPitch = pitch
+                        settings.instrumentPitch = pitch
+                    },
+                    text = pitch.displayName,
                 )
             }
         }

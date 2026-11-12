@@ -27,14 +27,14 @@ object BrassSynth {
 
     fun midiToFreq(midi: Int): Double = 440.0 * 2.0.pow((midi - 69) / 12.0)
 
-    /** Концертная высота для записанной ноты трубы in B♭ (на тон ниже). */
-    fun concertFreqForWritten(midi: Int): Double = midiToFreq(midi - 2)
+    /** Концертная высота для записанной ноты с учетом транспозиции строя. */
+    fun concertFreqForWritten(midi: Int, semitones: Int = -2): Double = midiToFreq(midi + semitones)
 
     /** PCM 16 bit little-endian, моно, [SAMPLE_RATE]. */
-    fun notePcm(midi: Int, seconds: Double = 0.65, peak: Float = 0.85f): ByteArray {
+    fun notePcm(midi: Int, seconds: Double = 0.65, peak: Float = 0.85f, semitones: Int = -2): ByteArray {
         val n = (seconds * SAMPLE_RATE).toInt()
         val out = ByteArray(n * 2)
-        val freq = concertFreqForWritten(midi)
+        val freq = concertFreqForWritten(midi, semitones)
         val phaseStep = TWO_PI * freq / SAMPLE_RATE
         var phase = 0.0
         val gain = tanh(2.0) // нормировка софт-клиппинга

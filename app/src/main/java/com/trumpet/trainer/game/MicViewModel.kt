@@ -87,10 +87,11 @@ class MicViewModel(private val container: AppContainer) : ViewModel() {
             return
         }
 
-        val writtenMidi = (reading.concertMidi.roundToInt() + 2)
+        val semitones = container.settings.instrumentPitch.semitones
+        val writtenMidi = (reading.concertMidi.roundToInt() - semitones)
         val target = _state.value.target
         val centsOff = target?.let {
-            val expected = BrassSynth.concertFreqForWritten(it.midi)
+            val expected = BrassSynth.concertFreqForWritten(it.midi, semitones)
             (1200 * log2(reading.frequencyHz / expected)).roundToInt()
         }
 

@@ -23,6 +23,7 @@ data class AppStrings(
     val bpmUnit: String,
     val settingShowNames: String,
     val settingSound: String,
+    val settingInstrumentPitch: String,
 
     // Trainer / Sight / Ear
     val earListenPrompt: String,
@@ -114,6 +115,7 @@ val RussianStrings = AppStrings(
     bpmUnit = "уд/мин",
     settingShowNames = "Показывать названия нот",
     settingSound = "Звук",
+    settingInstrumentPitch = "Строй инструмента",
 
     earListenPrompt = "Слушайте ноту…",
     earPlayAgain = "🔊  Прослушать ещё раз",
@@ -200,6 +202,7 @@ val EnglishStrings = AppStrings(
     bpmUnit = "BPM",
     settingShowNames = "Show note names",
     settingSound = "Sound",
+    settingInstrumentPitch = "Instrument Pitch",
 
     earListenPrompt = "Listen to the note…",
     earPlayAgain = "🔊  Play sound again",

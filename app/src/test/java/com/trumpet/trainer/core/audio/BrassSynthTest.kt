@@ -48,6 +48,18 @@ class BrassSynthTest {
     }
 
     @Test
+    fun concertFreqWithDifferentTranspositions() {
+        // B♭ (-2 semitones): written D4 (62) -> concert C4 (60)
+        assertEquals(BrassSynth.midiToFreq(60), BrassSynth.concertFreqForWritten(62, -2), 1e-6)
+        // C (0 semitones): written C4 (60) -> concert C4 (60)
+        assertEquals(BrassSynth.midiToFreq(60), BrassSynth.concertFreqForWritten(60, 0), 1e-6)
+        // F (-7 semitones): written C4 (60) -> concert F3 (53)
+        assertEquals(BrassSynth.midiToFreq(53), BrassSynth.concertFreqForWritten(60, -7), 1e-6)
+        // E♭ (-9 semitones): written C4 (60) -> concert E♭3 (51)
+        assertEquals(BrassSynth.midiToFreq(51), BrassSynth.concertFreqForWritten(60, -9), 1e-6)
+    }
+
+    @Test
     fun clicksAndBuzzNotEmpty() {
         assertTrue(BrassSynth.clickPcm(accent = true).isNotEmpty())
         assertTrue(BrassSynth.clickPcm(accent = false).isNotEmpty())

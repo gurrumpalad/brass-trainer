@@ -4,13 +4,14 @@ import android.app.Application
 import android.content.Context
 import com.trumpet.trainer.core.audio.AudioNotePlayer
 import com.trumpet.trainer.core.model.AppLanguage
+import com.trumpet.trainer.core.model.InstrumentPitch
 import com.trumpet.trainer.core.model.Level
 import com.trumpet.trainer.core.stats.StatsRepository
 
 /** Простой контейнер зависимостей (Hilt в прототипе избыточен). */
 class AppContainer(context: Context) {
     val settings = GameSettings()
-    val audio = AudioNotePlayer().apply { enabled = settings.soundEnabled }
+    val audio = AudioNotePlayer(settings).apply { enabled = settings.soundEnabled }
     val stats = StatsRepository(context.filesDir.resolve("stats.json")).apply { load() }
 }
 
@@ -21,6 +22,7 @@ class GameSettings {
     var soundEnabled: Boolean = true
     var bpm: Int = 90
     var language: AppLanguage = AppLanguage.RUSSIAN
+    var instrumentPitch: InstrumentPitch = InstrumentPitch.BB_FLAT
 }
 
 class TrumpetApp : Application() {
