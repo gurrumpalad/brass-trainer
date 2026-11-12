@@ -34,7 +34,7 @@ object BrassSynth {
     fun notePcm(midi: Int, seconds: Double = 0.65, peak: Float = 0.85f): ByteArray {
         val n = (seconds * SAMPLE_RATE).toInt()
         val out = ByteArray(n * 2)
-        val freq = midiToFreq(midi)
+        val freq = concertFreqForWritten(midi)
         val phaseStep = TWO_PI * freq / SAMPLE_RATE
         var phase = 0.0
         val gain = tanh(2.0) // нормировка софт-клиппинга

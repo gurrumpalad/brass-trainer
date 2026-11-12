@@ -28,8 +28,9 @@ class BrassSynthTest {
     }
 
     @Test
-    fun dominantFrequencyMatchesMidi() {
-        listOf(60 to 261.63, 67 to 392.0, 72 to 523.25).forEach { (midi, expected) ->
+    fun dominantFrequencyMatchesConcertFreq() {
+        listOf(62, 69, 74).forEach { midi ->
+            val expected = BrassSynth.concertFreqForWritten(midi)
             val floats = toFloats(BrassSynth.notePcm(midi))
             // устойчивая середина: без атаки и релиза
             val from = BrassSynth.SAMPLE_RATE / 4
